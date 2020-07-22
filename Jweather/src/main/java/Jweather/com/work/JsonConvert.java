@@ -1,6 +1,5 @@
 package Jweather.com.work;
 
-import java.util.*;
 import com.google.gson.Gson;
 
 public class JsonConvert {

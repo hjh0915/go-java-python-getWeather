@@ -71,6 +71,6 @@ public class JsonClient {
     }
 
     public String getUrl(String citycode) {
-        return APIURL+citycode+"&appid="+appid+"&appsecret="+appsecret;
+        return APIURL+citycode+"&appid="+appid+"&appsecret="+appsecret; //添加密钥
     }
 }

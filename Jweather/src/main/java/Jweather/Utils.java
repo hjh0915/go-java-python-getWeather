@@ -1,6 +1,6 @@
 package Jweather;
 
-import java.util.*;
+import java.util.HashMap;
 
 class Utils {
     public static HashMap<String, String> initData() {

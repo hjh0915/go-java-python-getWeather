@@ -17,7 +17,6 @@ public class App {
         JsonClient jsonClient = new JsonClient();
         JsonConvert jsonConvert = new JsonConvert();
 
-        int i = 0;
         for (String citycode: hmap.values()) {
             String cityUrl = jsonClient.getUrl(citycode);
             try {
@@ -28,8 +27,6 @@ public class App {
                 System.out.println(w.getData().get(0));
             } catch (Exception e) {
             } 
-            i++;
         }
-        System.out.print(i);
     }
 }
