@@ -38,7 +38,7 @@ class Weather(object):
         return results
 
     def get_city_weather(self, citycode: str):
-        '''获取城市天气'''
+        '''根据城市代码获取城市天气'''
 
         url = 'http://www.tianqiapi.com/api/?version=v1&cityid={0}&appid=68364224&appsecret=2BgyEsir'.format(citycode)
         r = requests.get(url)
