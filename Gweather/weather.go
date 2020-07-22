@@ -73,7 +73,7 @@ func getWeather(citycode string) {
 	}
 
 	defer resp.Body.Close()
-	input, err1 := ioutil.ReadAll(resp.Body)    //读取流数据
+	input, err1 := ioutil.ReadAll(resp.Body)    //读取数据流
 	if err1 != nil {
 		return
 	}
