@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();    //获取开始时间
         HashMap<String, String> hmap = Utils.initData();
         JsonClient jsonClient = new JsonClient();
         JsonConvert jsonConvert = new JsonConvert();
@@ -28,5 +29,7 @@ public class App {
             } catch (Exception e) {
             } 
         }
+        long endTime = System.currentTimeMillis();    //获取结束时间
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
     }
 }
