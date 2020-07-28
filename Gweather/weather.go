@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
+	"sync"
 )
 
 const (
@@ -64,8 +66,7 @@ type Index struct {
 	Desc string `json:"desc"`
 }
 
-
-func getWeather(citycode string) {
+func getWeather(citycode string, wg *sync.WaitGroup) {
 	url := fmt.Sprintf("%s&cityid=%s&appid=%s&appsecret=%s",URL,citycode,appid,appsecret)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -73,7 +74,7 @@ func getWeather(citycode string) {
 	}
 
 	defer resp.Body.Close()
-	input, err1 := ioutil.ReadAll(resp.Body)    //读取数据流
+	input, err1 := ioutil.ReadAll(resp.Body)    //读取流数据
 	if err1 != nil {
 		return
 	}
@@ -85,13 +86,41 @@ func getWeather(citycode string) {
 	}
 
 	if len(weather.City) != 0 {   //判断有无解析数据
-		for i := 0; i < 3; i++ {
-			fmt.Printf("城市:%s 时间:%s 温度:%s 天气:%s\n", 
-				weather.City, weather.Data[i].Date, weather.Data[i].Tem, weather.Data[i].Wea)
-		}
-    }
+		fmt.Printf("城市:%s 时间:%s 温度:%s 天气:%s\n", 
+			weather.City, weather.Data[0].Date, weather.Data[0].Tem, weather.Data[0].Wea)
+	}
+
+	wg.Done()
 }
 
-func main(){
-	getWeather("101240101")
+func main(){ 
+
+	var wg sync.WaitGroup
+
+	var cmap map[string]string 
+	cmap = map[string]string {
+		"天津": "101030100",
+		"南昌": "101240101",
+		"北京": "101010100",
+		"上海": "101020100",
+		"香港": "101320101",
+		"澳门": "101330101",
+		"杭州": "101210101",
+		"苏州": "101190401",
+		"南京": "101190101"}
+	
+	startTime := time.Now() // 获取当前时间
+	
+	for _, value := range cmap {
+		wg.Add(1)
+		go getWeather(value, &wg)
+	}
+
+	wg.Wait()
+	
+	// time.Sleep(1 * time.Second)
+
+	endTime := time.Now()
+    diff := endTime.Sub(startTime)
+    fmt.Println("该函数执行完成耗时：", diff.Seconds(), "s")
 }
